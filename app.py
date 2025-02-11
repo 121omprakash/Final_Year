@@ -80,5 +80,5 @@ if img is not None:
 
     # Optionally, show the prediction graph for all classes
     st.write("Prediction Distribution:")
-    st.bar_chart(predictions[1])
+    st.bar_chart(predictions[0])
 
