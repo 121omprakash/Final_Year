@@ -7,8 +7,12 @@ from tensorflow.keras.models import load_model
 # Load the trained model
 model = load_model('monument_recognition_model.h5')
 
-# Get the class labels from the model (this is automatically handled based on your training data)
-class_labels = list(model.class_indices.keys())  # This gives you the names of the classes
+# Solution 1: Hardcode the class labels
+class_labels = ['Aga Khan Palace', 'ajanta caves', 'class_3', ajmeri gate delhi,'albert hall museum','Badrinath Temple','bara imambara','barsi gate hansi old','basilica of bom jesus','Bekal','bharat mata mandir haridwar','bhoramdev mandir','Bhudha Temple','bidar fort','Brihadeshwara Temple','buland darwaza','byzantine architecture','Cathederal','Champaner','Chandi Devi mandir hariwar','chandigarh college of architecture','chapora fort','charminar','Cheese','chhatisgarh ke saat ajube','chhatrapati shivaji statue','Chhatrapati Shivaji terminus','chittorgarh','Chittorgarh Padmini Lake Palace','city palace','Daman','dhamek stupa','diu','Diu Museum','dome','dubdi monastery yuksom sikkim','falaknuma palace','fatehpur sikri','Fatehpur Sikri Fort','ford Auguda','fortification','gol ghar','golden temple','Hampi','hawa mahal','hidimbi devi temple','hindu temple','Hoshang Shah Tomb','India Gate','Isarlat Sargasooli']  # Replace with your actual class names
+
+# Alternatively, load class labels from a file (Solution 2)
+# with open('class_labels.json', 'r') as f:
+#     class_labels = json.load(f)
 
 # Set up the title and description
 st.title("Monument Recognition")
