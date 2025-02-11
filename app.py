@@ -9,23 +9,7 @@ model = load_model('monument_recognition_model.h5')
 
 # Hardcode the class labels
 class_labels = [
-    'Aga Khan Palace', 'Ajanta Caves', 'Class 3', 'Ajmeri Gate Delhi', 
-    'Albert Hall Museum', 'Badrinath Temple', 'Bara Imambara', 
-    'Barsi Gate Hansi Old', 'Basilica of Bom Jesus', 'Bekal', 
-    'Bharat Mata Mandir Haridwar', 'Bhoramdev Mandir', 'Buddha Temple', 
-    'Bidar Fort', 'Brihadeshwara Temple', 'Buland Darwaza', 
-    'Byzantine Architecture', 'Cathedral', 'Champaner', 
-    'Chandi Devi Mandir Haridwar', 'Chandigarh College of Architecture', 
-    'Chapora Fort', 'Charminar', 'Cheese', 
-    'Chhattisgarh Ke Saat Ajube', 'Chhatrapati Shivaji Statue', 
-    'Chhatrapati Shivaji Terminus', 'Chittorgarh', 
-    'Chittorgarh Padmini Lake Palace', 'City Palace', 'Daman', 
-    'Dhamek Stupa', 'Diu', 'Diu Museum', 'Dome', 
-    'Dubdi Monastery Yuksom Sikkim', 'Falaknuma Palace', 
-    'Fatehpur Sikri', 'Fatehpur Sikri Fort', 'Ford Auguda', 
-    'Fortification', 'Gol Ghar', 'Golden Temple', 'Hampi', 
-    'Hawa Mahal', 'Hidimbi Devi Temple', 'Hindu Temple', 
-    'Hoshang Shah Tomb', 'India Gate', 'Isarlat Sargasooli'
+    'Aga Khan Palace', 'Badrinath Temple', 'Bekal', 'Bhudha Temple', 'Brihadeshwara Temple', 'Cathederal', 'Champaner', 'Chandi Devi mandir hariwar', 'Cheese', 'Chhatrapati Shivaji terminus', 'Chittorgarh Padmini Lake Palace', 'Daman', 'Diu Museum', 'Fatehpur Sikri Fort', 'Hampi', 'Hoshang Shah Tomb', 'India Gate', 'Isarlat Sargasooli', 'ajanta caves', 'ajmeri gate delhi', 'albert hall museum', 'bara imambara', 'barsi gate hansi old', 'basilica of bom jesus', 'bharat mata mandir haridwar', 'bhoramdev mandir', 'bidar fort', 'buland darwaza', 'byzantine architecture', 'chandigarh college of architecture', 'chapora fort', 'charminar', 'chhatisgarh ke saat ajube', 'chhatrapati shivaji statue', 'chittorgarh', 'city palace', 'dhamek stupa', 'diu', 'dome', 'dubdi monastery yuksom sikkim', 'falaknuma palace', 'fatehpur sikri', 'ford Auguda', 'fortification', 'gol ghar', 'golden temple', 'hawa mahal', 'hidimbi devi temple', 'hindu temple'
 ]  # Replace with your actual class names
 
 # Set up the title and description
