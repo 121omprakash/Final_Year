@@ -6,7 +6,8 @@ from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
 
 # Load the trained model
-model = tf.keras.models.load_model('monument_recognition_model.h5')
+model = load_model('monument_recognition_model.h5')
+
 
 # Load class labels (assuming you have train_data or equivalent to fetch the class indices)
 # Here you could either manually define the labels or load them based on your training data.
