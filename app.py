@@ -6,41 +6,42 @@ from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
 
 # Load the trained model
-model = load_model('monument_recognition_model.h5')
+model = tf.keras.models.load_model('monument_recognition_model.h5')
 
-# Set up the title and description
+# Load class labels (assuming you have train_data or equivalent to fetch the class indices)
+# Here you could either manually define the labels or load them based on your training data.
+# Example:
+# class_labels = ['Class 1', 'Class 2', 'Class 3']
+# Or dynamically using something like this:
+class_labels = list(train_data.class_indices.keys())
+
+# Streamlit app header
 st.title("Monument Recognition")
-st.write("Upload an image and the model will predict the monument category.")
 
-# Upload image
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
+# Allow the user to upload an image
+uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
-# If the user uploads an image
 if uploaded_file is not None:
-    # Open the image
-    img = image.load_img(uploaded_file, target_size=(224, 224))
-    
     # Display the uploaded image
-    st.image(img, caption="Uploaded Image", use_column_width=True)
-    
+    st.image(uploaded_file, caption="Uploaded Image.", use_column_width=True)
+
     # Preprocess the image
+    img = image.load_img(uploaded_file, target_size=(224, 224))  # Resize image to match model input
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
     img_array = img_array / 255.0  # Normalize the image
-    
-    # Make prediction
-    predictions = model.predict(img_array)
-    
-    # Get the predicted class
-    predicted_class = np.argmax(predictions, axis=1)
-    
-    # Map the predicted class index back to the corresponding class label
-    class_labels = list(model.input_shape[1])
-    predicted_label = class_labels[predicted_class[0]]
-    
-    # Display the prediction result
-    st.write(f"Predicted label: {predicted_label}")
 
+    # Make a prediction
+    predictions = model.predict(img_array)
+
+    # Get the predicted class index
+    predicted_class = np.argmax(predictions, axis=1)
+
+    # Map the predicted class index to the corresponding class label
+    predicted_label = class_labels[predicted_class[0]]
+
+    # Show the predicted label
+    st.write(f"Predicted label: {predicted_label}")
     # Optionally, display the confidence score of the prediction
     confidence_score = np.max(predictions) * 100
     st.write(f"Confidence: {confidence_score:.2f}%")
