@@ -7,6 +7,9 @@ from tensorflow.keras.models import load_model
 # Load the trained model
 model = load_model('monument_recognition_model.h5')
 
+# Get the class labels from the model (this is automatically handled based on your training data)
+class_labels = list(model.class_indices.keys())  # This gives you the names of the classes
+
 # Set up the title and description
 st.title("Monument Recognition")
 st.write("Upload an image or use your camera to capture one, and the model will predict the monument category.")
@@ -19,7 +22,7 @@ if image_option == "Upload an Image":
 
     if uploaded_file is not None:
         # Open the image
-        img = image.load_img(uploaded_file, target_size=(224, 224))
+        img = image.load_img(uploaded_file, target_size=(224, 224))  # Resize to model's input size
         st.image(img, caption="Uploaded Image", use_column_width=True)
         
 elif image_option == "Use Camera":
@@ -28,7 +31,7 @@ elif image_option == "Use Camera":
     if captured_image is not None:
         # Display the captured image
         st.image(captured_image, caption="Captured Image", use_column_width=True)
-        img = image.load_img(captured_image, target_size=(224, 224))
+        img = image.load_img(captured_image, target_size=(224, 224))  # Resize to model's input size
 
 # If an image is uploaded or captured
 if uploaded_file is not None or captured_image is not None:
@@ -44,11 +47,7 @@ if uploaded_file is not None or captured_image is not None:
     predicted_class = np.argmax(predictions, axis=1)
 
     # Map the predicted class index back to the corresponding class label
-    # Replace 'train_data.class_indices' with your actual class labels
-    class_labels = ['class_1', 'class_2', 'class_3']  # Replace with your actual class labels
     predicted_label = class_labels[predicted_class[0]]
-
-    # Display the prediction result
     st.write(f"Predicted label: {predicted_label}")
 
     # Optionally, display the confidence score of the prediction
