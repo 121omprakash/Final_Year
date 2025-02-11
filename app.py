@@ -8,12 +8,19 @@ from tensorflow.keras.models import load_model
 model = load_model('monument_recognition_model.h5')
 
 # Solution 1: Hardcode the class labels
-class_labels = ['Aga Khan Palace', 'ajanta caves','ajmeri gate delhi','albert hall museum','Badrinath Temple','bara imambara','barsi gate hansi old','basilica of bom jesus','Bekal','bharat mata mandir haridwar','bhoramdev mandir','Bhudha Temple','bidar fort','Brihadeshwara Temple','buland darwaza','byzantine architecture','Cathederal','Champaner','Chandi Devi mandir hariwar','chandigarh college of architecture','chapora fort','charminar','Cheese','chhatisgarh ke saat ajube','chhatrapati shivaji statue','Chhatrapati Shivaji terminus','chittorgarh','Chittorgarh Padmini Lake Palace','city palace','Daman','dhamek stupa','diu','Diu Museum','dome','dubdi monastery yuksom sikkim','falaknuma palace','fatehpur sikri','Fatehpur Sikri Fort','ford Auguda','fortification','gol ghar','golden temple','Hampi','hawa mahal','hidimbi devi temple','hindu temple','Hoshang Shah Tomb','India Gate','Isarlat Sargasooli']  
-# Replace with your actual class names
-
-# Alternatively, load class labels from a file (Solution 2)
-# with open('class_labels.json', 'r') as f:
-#     class_labels = json.load(f)
+class_labels = [
+    'Aga Khan Palace', 'ajanta caves', 'class_3', 'ajmeri gate delhi', 'albert hall museum', 
+    'Badrinath Temple', 'bara imambara', 'barsi gate hansi old', 'basilica of bom jesus', 
+    'Bekal', 'bharat mata mandir haridwar', 'bhoramdev mandir', 'Bhudha Temple', 'bidar fort', 
+    'Brihadeshwara Temple', 'buland darwaza', 'byzantine architecture', 'Cathederal', 'Champaner', 
+    'Chandi Devi mandir hariwar', 'chandigarh college of architecture', 'chapora fort', 'charminar', 
+    'Cheese', 'chhatisgarh ke saat ajube', 'chhatrapati shivaji statue', 'Chhatrapati Shivaji terminus', 
+    'chittorgarh', 'Chittorgarh Padmini Lake Palace', 'city palace', 'Daman', 'dhamek stupa', 'diu', 
+    'Diu Museum', 'dome', 'dubdi monastery yuksom sikkim', 'falaknuma palace', 'fatehpur sikri', 
+    'Fatehpur Sikri Fort', 'ford Auguda', 'fortification', 'gol ghar', 'golden temple', 'Hampi', 
+    'hawa mahal', 'hidimbi devi temple', 'hindu temple', 'Hoshang Shah Tomb', 'India Gate', 
+    'Isarlat Sargasooli'
+]  # Replace with your actual class names
 
 # Set up the title and description
 st.title("Monument Recognition")
@@ -22,24 +29,25 @@ st.write("Upload an image or use your camera to capture one, and the model will 
 # Option to upload an image or capture using camera
 image_option = st.radio("Choose Image Source", ("Upload an Image", "Use Camera"))
 
+uploaded_file = None
+captured_image = None
+
 if image_option == "Upload an Image":
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
-    if uploaded_file is not None:
-        # Open the image
-        img = image.load_img(uploaded_file, target_size=(224, 224))  # Resize to model's input size
-        st.image(img, caption="Uploaded Image", use_column_width=True)
-        
 elif image_option == "Use Camera":
     captured_image = st.camera_input("Capture an image")
 
-    if captured_image is not None:
-        # Display the captured image
+# If an image is uploaded or captured
+if uploaded_file is not None or captured_image is not None:
+    # Determine the image source
+    if uploaded_file is not None:
+        img = image.load_img(uploaded_file, target_size=(224, 224))  # Resize to model's input size
+        st.image(img, caption="Uploaded Image", use_column_width=True)
+    elif captured_image is not None:
         st.image(captured_image, caption="Captured Image", use_column_width=True)
         img = image.load_img(captured_image, target_size=(224, 224))  # Resize to model's input size
 
-# If an image is uploaded or captured
-if uploaded_file is not None or captured_image is not None:
     # Preprocess the image
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
@@ -64,7 +72,6 @@ if uploaded_file is not None or captured_image is not None:
     st.bar_chart(predictions[0])
 
 # Additional Features:
-
 # Show some instructions on how to use the app
 st.sidebar.title("How to Use the App")
 st.sidebar.write(
