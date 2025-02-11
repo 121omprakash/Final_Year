@@ -1,5 +1,5 @@
 tensorflow==2.16.1
 streamlit==1.17.0
-numpy==1.23.5
+numpy==1.26.4
 setuptools>=65.0.0
 pyproject-hooks
