@@ -9,12 +9,34 @@ model = load_model('monument_recognition_model.h5')
 
 # Hardcode the class labels
 class_labels = [
-    'Aga Khan Palace', 'Badrinath Temple', 'Bekal', 'Bhudha Temple', 'Brihadeshwara Temple', 'Cathederal', 'Champaner', 'Chandi Devi mandir hariwar', 'Cheese', 'Chhatrapati Shivaji terminus', 'Chittorgarh Padmini Lake Palace', 'Daman', 'Diu Museum', 'Fatehpur Sikri Fort', 'Hampi', 'Hoshang Shah Tomb', 'India Gate', 'Isarlat Sargasooli', 'ajanta caves', 'ajmeri gate delhi', 'albert hall museum', 'bara imambara', 'barsi gate hansi old', 'basilica of bom jesus', 'bharat mata mandir haridwar', 'bhoramdev mandir', 'bidar fort', 'buland darwaza', 'byzantine architecture', 'chandigarh college of architecture', 'chapora fort', 'charminar', 'chhatisgarh ke saat ajube', 'chhatrapati shivaji statue', 'chittorgarh', 'city palace', 'dhamek stupa', 'diu', 'dome', 'dubdi monastery yuksom sikkim', 'falaknuma palace', 'fatehpur sikri', 'ford Auguda', 'fortification', 'gol ghar', 'golden temple', 'hawa mahal', 'hidimbi devi temple', 'hindu temple'
+    'Aga Khan Palace', 'Badrinath Temple', 'Bekal', 'Bhudha Temple', 
+    'Brihadeshwara Temple', 'Cathederal', 'Champaner', 
+    'Chandi Devi mandir hariwar', 'Cheese', 'Chhatrapati Shivaji terminus', 
+    'Chittorgarh Padmini Lake Palace', 'Daman', 'Diu Museum', 
+    'Fatehpur Sikri Fort', 'Hampi', 'Hoshang Shah Tomb', 
+    'India Gate', 'Isarlat Sargasooli', 'ajanta caves', 
+    'ajmeri gate delhi', 'albert hall museum', 'bara imambara', 
+    'barsi gate hansi old', 'basilica of bom jesus', 
+    'bharat mata mandir haridwar', 'bhoramdev mandir', 
+    'bidar fort', 'buland darwaza', 'byzantine architecture', 
+    'chandigarh college of architecture', 'chapora fort', 
+    'charminar', 'chhatisgarh ke saat ajube', 
+    'chhatrapati shivaji statue', 'chittorgarh', 
+    'city palace', 'dhamek stupa', 'diu', 
+    'dome', 'dubdi monastery yuksom sikkim', 
+    'falaknuma palace', 'fatehpur sikri', 'ford Auguda', 
+    'fortification', 'gol ghar', 'golden temple', 
+    'hawa mahal', 'hidimbi devi temple', 'hindu temple'
 ]  # Replace with your actual class names
 
 # Set up the title and description
 st.title("Monument Recognition")
 st.write("Upload an image or use your camera to capture one, and the model will predict the monument category.")
+
+# Initialize variables
+uploaded_file = None
+captured_image = None
+img = None  # Initialize img variable
 
 # Option to upload an image or capture using camera
 image_option = st.radio("Choose Image Source", ("Upload an Image", "Use Camera"))
@@ -25,18 +47,18 @@ if image_option == "Upload an Image":
     if uploaded_file is not None:
         # Open the image
         img = image.load_img(uploaded_file, target_size=(224, 224))  # Resize to model's input size
-        st.image(img, caption="Uploaded Image", use_column_width=True)
+        st.image(img, caption="Uploaded Image", use_container_width=True)
         
 elif image_option == "Use Camera":
     captured_image = st.camera_input("Capture an image")
 
     if captured_image is not None:
         # Display the captured image
-        st.image(captured_image, caption="Captured Image", use_column_width=True)
         img = image.load_img(captured_image, target_size=(224, 224))  # Resize to model's input size
+        st.image(captured_image, caption="Captured Image", use_container_width=True)
 
 # If an image is uploaded or captured
-if uploaded_file is not None or captured_image is not None:
+if img is not None:
     # Preprocess the image
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
@@ -60,11 +82,3 @@ if uploaded_file is not None or captured_image is not None:
     st.write("Prediction Distribution:")
     st.bar_chart(predictions[0])
 
-# Additional Features:
-# Show some instructions on how to use the app
-st.sidebar.title("How to Use the App")
-st.sidebar.write(
-    "1 . Upload an image of a monument (jpg, png, jpeg) or capture an image using your camera. \n"
-    "2. The model will predict the monument category. \n"
-    "3. See the confidence score and distribution chart."
-)
