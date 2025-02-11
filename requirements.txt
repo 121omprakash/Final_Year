@@ -1,5 +1,5 @@
 tensorflow==2.16.1
 streamlit==1.17.0
 numpy==1.23.5
-Pillow==9.3.0
-matplotlib==3.7.0
+setuptools>=65.0.0
+pyproject-hooks
