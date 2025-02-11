@@ -85,7 +85,7 @@ if img is not None:
     predicted_class = np.argmax(predictions, axis=1)
 
     # Map the predicted class index back to the corresponding class label
-    predicted _label = class_labels[predicted_class[0]]
+    predicted_label = class_labels[predicted_class[0]]
     st.write(f"Predicted label: {predicted_label}")
 
     # Optionally, display the confidence score of the prediction
