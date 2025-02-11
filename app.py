@@ -26,7 +26,7 @@ class_labels = [
     'Fortification', 'Gol Ghar', 'Golden Temple', 'Hampi', 
     'Hawa Mahal', 'Hidimbi Devi Temple', 'Hindu Temple', 
     'Hoshang Shah Tomb', 'India Gate', 'Isarlat Sargasooli'
-] 
+]  # Replace with your actual class names
 
 # Set up the title and description
 st.title("Monument Recognition")
@@ -80,7 +80,7 @@ if uploaded_file is not None or captured_image is not None:
 # Show some instructions on how to use the app
 st.sidebar.title("How to Use the App")
 st.sidebar.write(
-    "1. Upload an image of a monument (jpg, png, jpeg) or capture an image using your camera. \n"
+    "1 . Upload an image of a monument (jpg, png, jpeg) or capture an image using your camera. \n"
     "2. The model will predict the monument category. \n"
     "3. See the confidence score and distribution chart."
 )
