@@ -6,10 +6,10 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 
 # Load the trained model
-model = load_model('monument_recognition_model.tflite')
+model = load_model('monument_recognition_model.h5')
 
 # Hardcode the class labels
-class_labels = [
+class_labels = ['.ipynb_checkpoints',
     'Ahilya Mandir', 'Ashokan Pillar Vaishali', 'Bihar Museum Patna', 'Biscomaun Bhawan', 
     'Black Buddha Temple Nalanda', 'Buddha Relic Stupa Vaishali', 'Buddha Smriti Park Patna', 
     'Cyclopean Wall Rajgir', 'Dashrath Manjhi Memorial Gaya', 'Daud Khan Fort Aurangabad', 
@@ -91,9 +91,3 @@ if img is not None:
     # Optionally, show the prediction graph for all classes
     st.write("Prediction Distribution:")
     st.bar_chart(predictions[0])
-
-
-
-
-
-

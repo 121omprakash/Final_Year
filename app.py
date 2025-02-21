@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 
 # Load the trained model
-model = load_model('monument_recognition_model.h5')
+model = load_model('monument_recognition_model_prev.h5')
 
 # Hardcode the class labels
 class_labels = [
