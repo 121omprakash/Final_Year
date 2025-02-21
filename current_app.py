@@ -1,11 +1,12 @@
+
 import streamlit as st
 import numpy as np
-import tensorflow as tf
+from PIL import Image, ImageFilter
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 
 # Load the trained model
-model = load_model('monument_recognition_model.h5')
+model = load_model('monument_recognition_model.tflite')
 
 # Hardcode the class labels
 class_labels = [
@@ -27,7 +28,7 @@ class_labels = [
 st.title("Monument Recognition")
 st.write("This model is trained on the following monument categories: ")
 st.write(", ".join(i+'\n' for i in class_labels))  # Display all class labels as a list
-st.write("Please upload an image that corresponds to one of these monuments for accurate predictions.")
+
 # Initialize variables
 uploaded_file = None
 captured_image = None
@@ -41,7 +42,7 @@ if image_option == "Upload an Image":
 
     if uploaded_file is not None:
         # Open the image
-        img = image.load_img(uploaded_file, target_size=(224, 224))  # Resize to model's input size
+        img = Image.open(uploaded_file)
         st.image(img, caption="Uploaded Image", use_container_width=True)
         
 elif image_option == "Use Camera":
@@ -49,13 +50,27 @@ elif image_option == "Use Camera":
 
     if captured_image is not None:
         # Display the captured image
-        img = image.load_img(captured_image, target_size=(224, 224))  # Resize to model's input size
-        st.image(captured_image, caption="Captured Image", use_container_width=True)
+        img = Image.open(captured_image)
+        st.image(img, caption="Captured Image", use_container_width=True)
 
 # If an image is uploaded or captured
 if img is not None:
-    # Preprocess the image
-    img_array = image.img_to_array(img)
+    # Crop the image (you can adjust the cropping box as needed)
+    width, height = img.size
+    left = int(width * 0.05)  # 5% from the left
+    top = int(height * 0.05)  # 5% from the top
+    right = int(width * 0.95)  # 5% from the right
+    bottom = int(height * 0.95)  # 5% from the bottom
+    img_cropped = img.crop((left, top, right, bottom))
+
+    # Apply image filtering (e.g., Gaussian blur)
+    img_filtered = img_cropped.filter(ImageFilter.GaussianBlur(radius=2))  # Adjust radius as needed
+
+    # Resize the image to the model's input size
+    img_resized = img_filtered.resize((224, 224))  # Resize to model's input size
+
+    # Convert the final processed image to an array
+    img_array = image.img_to_array(img_resized)  # Convert image to array
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
     img_array = img_array / 255.0  # Normalize the image
 
@@ -76,10 +91,6 @@ if img is not None:
     # Optionally, show the prediction graph for all classes
     st.write("Prediction Distribution:")
     st.bar_chart(predictions[0])
-
-
-
-
 
 
 
